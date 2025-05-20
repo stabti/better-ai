@@ -7,10 +7,10 @@ function App() {
 
   const texts = {
     en: {
-      title: "Sonia Tabti",
+      title: "Sonia Tabti, PhD",
       nav: ["About", "Services", "Training", "Superpowers", "Contact"],
       heroTitle: "Empowering Businesses with Intelligent Solutions",
-      heroDesc: "Freelance AI Project Leader • Expert in Computer Vision, LLMs & Responsible AI • Helping teams build cutting-edge AI products",
+      heroDesc: "Freelance AI Project Leader • Expert in Computer Vision, VLMs, Machine learning & Responsible AI • Helping teams build cutting-edge AI products",
       getInTouch: "Get in Touch",
       aboutTitle: "Over 12 Years of AI Leadership",
       aboutDesc: "From academic research to real-world deployment — building impactful AI solutions tailored to your business.",
@@ -22,7 +22,7 @@ function App() {
         "Crack complex data science challenges, especially in Computer Vision",
         "Mentor your data scientists and ML engineers",
         "Acculturate your teams to AI through training",
-        "Help you leverage the potential of Visual Language Models for your business (Computer Vision, Multimodal RAG...)"
+        "Help you leverage the potential of Visual Language Models (RAG, OCR, ...)"
       ],
       trainingTitle: "Training Programs",
       trainingSubtitle: "Tailored training sessions designed to enhance your team's AI capabilities.",
@@ -39,7 +39,7 @@ function App() {
         },
         {
           title: "Ethical AI Advocate",
-          description: "Committed to responsible AI, inclusivity in tech, and transparency in model development."
+          description: "Committed to responsible AI, inclusivity in Tech, and transparency in model development."
         },
         {
           title: "Thought Leadership",
@@ -50,6 +50,8 @@ function App() {
       contactDesc: "Reach out via email or connect with me to start your next AI project.",
       bookNow: "Book Now",
       bookAction: "Book Now",
+      bookDesc: "Schedule a 30-minute call to discuss your AI project.",
+      connect: "Connect with me professionally:",
       linkedin: "LinkedIn Profile",
       copyright: "All rights reserved."
     },
@@ -57,19 +59,19 @@ function App() {
       title: "Sonia Tabti",
       nav: ["À Propos", "Services", "Formations", "Superpouvoirs", "Contact"],
       heroTitle: "Transformer les entreprises avec des solutions intelligentes",
-      heroDesc: "Consultante freelance en IA • Spécialiste en Vision par Ordinateur, LLMs et IA Responsable • Accompagne les équipes dans la création d'applications IA innovantes",
+      heroDesc: "Consultante freelance en IA • Spécialiste en Vision par Ordinateur, VLMs et IA Responsable • Accompagne les équipes dans la création de produits IA innovants",
       getInTouch: "Me Contacter",
-      aboutTitle: "Plus de 12 ans d'expérience en IA",
+      aboutTitle: "Plus de 12 ans d'Expérience en IA",
       aboutDesc: "De la recherche académique à l’industrie — concevoir des solutions IA efficaces adaptées à vos besoins.",
       servicesTitle: "Ce que je propose",
       servicesSubtitle: "J'aide les organisations à transformer leurs idées en produits intelligents et évolutifs grâce à l'IA.",
       serviceItems: [
-        "Définir votre feuille de route en priorisant vos cas d'utilisation et questions de R&D",
+        "Définir votre feuille de route en priorisant vos cas d'usages et questions de R&D",
         "Aider au lancement de nouveaux produits basés sur l'IA, du POC au déploiement",
         "Résoudre des problèmes complexes de science des données, notamment en vision par ordinateur",
-        "Mentorat pour vos data scientists et ingénieurs ML",
+        "Mentorat de vos data scientists et ML-engineers",
         "Former vos équipes à l'IA",
-        "Vous aider à tirer parti du potentiel des modèles visuo-linguistiques pour votre entreprise (Vision par ordinateur, RAG multimodal…)"
+        "Vous aider à tirer parti du potentiel des Vision Language Models (RAG, OCR, ...)"
       ],
       trainingTitle: "Programmes de Formation",
       trainingSubtitle: "Des formations sur mesure pour renforcer les compétences de votre équipe en IA.",
@@ -93,10 +95,12 @@ function App() {
           description: "Intervenante régulière lors d'événements professionnels et participante à des débats autour de l'IA."
         }
       ],
-      contactTitle: "Construisons quelque chose ensemble",
+      contactTitle: "Construisons votre projet ensemble",
       contactDesc: "Contactez-moi par e-mail ou via LinkedIn pour démarrer votre prochain projet d'IA.",
       bookNow: "Réserver un créneau",
       bookAction: "Réserver maintenant",
+      bookDesc: "Planifiez un appel de 30 minutes pour discuter de votre projet IA.",
+      connect: "Connectez-vous avec moi sur le plan professionnel :",
       linkedin: "Profil LinkedIn",
       copyright: "Tous droits réservés."
     }
@@ -117,22 +121,22 @@ function App() {
     },
     {
       title: {
-        en: "AI Assistant Awareness",
+        en: "AI Assistants Awareness",
         fr: "Utilisation responsable des assistants IA"
       },
       description: {
-        en: "Learn how to use AI assistants effectively while being mindful of their limitations and ethical considerations.",
-        fr: "Apprendre à utiliser les assistants d'intelligence artificielle efficacement tout en étant conscient de leurs limites et enjeux éthiques."
+        en: "Understand the limits and bias of Generative AI models and know the risks of AI assistants' misuse.",
+        fr: "Être sensibilisé aux limites et aux biais des IA génératives ainsi qu'aux risques d'un usage excessif des assistants d'IA."
       }
     },
     {
       title: {
-        en: "Carbon Footprint Measurement",
-        fr: "Évaluation de l'empreinte carbone"
+        en: "AI models' carbon footprint",
+        fr: "Empreinte carbone d'un modèle d'IA"
       },
       description: {
-        en: "Discover methods to measure and reduce the carbon footprint of AI model development and inference.",
-        fr: "Découvrir des méthodes pour mesurer et réduire l'empreinte carbone liée au développement et à l’utilisation des modèles d’IA."
+        en: "Learn why mesuring the environmental impact of your AI models development and inference is important. Discover open-source tools to estimate this impact and best practices to reduce it.",
+        fr: "Apprendre pourquoi il est important de mesurer l'impact environnemental du développement et de l'exécution de modèles d'IA. Découvrir des outils open-source pour estimer cet impact et des bonnes pratiques pour le réduire."
       }
     },
     {
@@ -142,10 +146,27 @@ function App() {
       },
       description: {
         en: "Master techniques for semi-automating image labeling processes in Computer Vision projects.",
-        fr: "Maîtriser les techniques pour automatiser partiellement le processus d’annotation d’images dans des projets de vision par ordinateur."
+        fr: "Maîtriser les techniques pour semi-automatiser l’annotation des images dans des projets de vision par ordinateur."
       }
     }
   ];
+
+  const navLinks = {
+    en: [
+      { label: "About", id: "about" },
+      { label: "Services", id: "services" },
+      { label: "Training", id: "training" },
+      { label: "Superpowers", id: "superpowers" },
+      { label: "Contact", id: "contact" }
+    ],
+    fr: [
+      { label: "À Propos", id: "about" },
+      { label: "Services", id: "services" },
+      { label: "Formations", id: "training" },
+      { label: "Superpouvoirs", id: "superpowers" },
+      { label: "Contact", id: "contact" }
+    ]
+  };
 
   return (
     React.createElement("div", { className: "bg-white text-gray-800 leading-relaxed tracking-tight" },
@@ -158,12 +179,12 @@ function App() {
               React.createElement("a", { href: "#", className: "text-xl font-bold text-indigo-600" }, current.title)
             ),
             React.createElement("nav", { className: "hidden md:flex space-x-10" },
-              current.nav.map((item, idx) =>
+              navLinks[language].map((item, idx) =>
                 React.createElement("a", {
                   key: idx,
-                  href: `#${item.toLowerCase().replace(/\s+/g, '')}`,
+                  href: `#${item.id}`,
                   className: "text-base font-medium text-gray-700 hover:text-indigo-600"
-                }, item)
+                }, item.label)
               )
             ),
             React.createElement("div", { className: "hidden md:flex justify-end space-x-4" },
@@ -234,12 +255,12 @@ function App() {
               ),
               React.createElement("div", { className: "mt-6" },
                 React.createElement("nav", { className: "grid gap-y-8" },
-                  current.nav.map((item, idx) =>
+                  navLinks[language].map((item, idx) =>
                     React.createElement("a", {
                       key: idx,
-                      href: `#${item.toLowerCase().replace(/\s+/g, '')}`,
+                      href: `#${item.id}`,
                       className: "text-base font-medium text-gray-700 hover:text-indigo-600"
-                    }, item)
+                    }, item.label)
                   )
                 )
               ),
@@ -274,8 +295,8 @@ function App() {
       React.createElement("section", { id: "about", className: "py-16 bg-white" },
         React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
           React.createElement("div", { className: "lg:text-center" },
-            React.createElement("h2", { className: "text-base text-indigo-600 font-semibold tracking-wide uppercase" }, current.aboutTitle),
-            React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.aboutDesc)
+          React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.aboutTitle),
+          React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.aboutDesc)
           )
         )
       ),
@@ -284,7 +305,6 @@ function App() {
       React.createElement("section", { id: "services", className: "py-16 bg-gray-50" },
         React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
           React.createElement("div", { className: "lg:text-center" },
-            React.createElement("h2", { className: "text-base text-indigo-600 font-semibold tracking-wide uppercase" }, current.servicesTitle),
             React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.servicesTitle),
             React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.servicesSubtitle)
           ),
@@ -310,7 +330,6 @@ function App() {
       React.createElement("section", { id: "training", className: "py-16 bg-white" },
         React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
           React.createElement("div", { className: "lg:text-center" },
-            React.createElement("h2", { className: "text-base text-indigo-600 font-semibold tracking-wide uppercase" }, current.trainingTitle),
             React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.trainingTitle),
             React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.trainingSubtitle)
           ),
@@ -338,7 +357,6 @@ function App() {
       React.createElement("section", { id: "superpowers", className: "py-16 bg-indigo-50" },
         React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
           React.createElement("div", { className: "lg:text-center" },
-            React.createElement("h2", { className: "text-base text-indigo-600 font-semibold tracking-wide uppercase" }, current.superpowersTitle),
             React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.superpowersTitle),
             React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.superpowersSubtitle)
           ),
@@ -370,7 +388,7 @@ function App() {
           ),
           React.createElement("div", { className: "mt-8" },
             React.createElement("h3", { className: "text-xl font-semibold text-gray-900" }, current.bookNow),
-            React.createElement("p", { className: "text-gray-600 mt-2" }, "Schedule a 30-minute call to discuss your AI project."),
+            React.createElement("p", { className: "text-gray-600 mt-2" }, current.bookDesc),
             React.createElement("a", {
               href: "https://calendly.com/sonia-tabti ",
               target: "_blank",
@@ -379,7 +397,7 @@ function App() {
             }, current.bookAction)
           ),
           React.createElement("div", { className: "mt-8" },
-            React.createElement("p", { className: "text-gray-600" }, "Connect with me professionally:"),
+            React.createElement("p", { className: "text-gray-600" }, current.connect),
             React.createElement("a", {
               href: "https://www.linkedin.com/in/sonia-tabti-phd-b6993835 ",
               target: "_blank",
