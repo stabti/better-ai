@@ -149,38 +149,29 @@ function App() {
 
   return (
     React.createElement("div", { className: "bg-white text-gray-800 leading-relaxed tracking-tight" },
+
       // Header
       React.createElement("header", { className: "sticky top-0 z-50 bg-white shadow-sm" },
         React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
           React.createElement("div", { className: "flex justify-between items-center py-4 md:justify-start md:space-x-10" },
-            // Logo
             React.createElement("div", { className: "flex justify-start lg:w-0 lg:flex-1" },
-              React.createElement("a", {
-                href: "#",
-                className: "text-xl font-bold text-indigo-600"
-              }, current.title)
+              React.createElement("a", { href: "#", className: "text-xl font-bold text-indigo-600" }, current.title)
             ),
-
-            // Desktop Nav
             React.createElement("nav", { className: "hidden md:flex space-x-10" },
               current.nav.map((item, idx) =>
                 React.createElement("a", {
                   key: idx,
-                  href: `#${item.toLowerCase().replace(/\\s+/g, "")}`,
+                  href: `#${item.toLowerCase().replace(/\s+/g, '')}`,
                   className: "text-base font-medium text-gray-700 hover:text-indigo-600"
                 }, item)
               )
             ),
-
-            // Language Toggle
             React.createElement("div", { className: "hidden md:flex justify-end space-x-4" },
               React.createElement("button", {
                 onClick: () => setLanguage(language === 'en' ? 'fr' : 'en'),
                 className: "text-indigo-600 underline hover:text-indigo-800"
               }, language === 'en' ? 'Français' : 'English')
             ),
-
-            // Mobile Menu Button
             React.createElement("div", { className: "-mr-2 -my-2 md:hidden" },
               React.createElement("button", {
                 onClick: () => setMobileMenuOpen(true),
@@ -216,10 +207,7 @@ function App() {
             React.createElement("div", { className: "pt-5 pb-6 px-5" },
               React.createElement("div", { className: "flex items-center justify-between" },
                 React.createElement("div", null,
-                  React.createElement("a", {
-                    href: "#",
-                    className: "text-xl font-bold text-indigo-600"
-                  }, current.title)
+                  React.createElement("a", { href: "#", className: "text-xl font-bold text-indigo-600" }, current.title)
                 ),
                 React.createElement("div", { className: "-mr-2" },
                   React.createElement("button", {
@@ -267,7 +255,7 @@ function App() {
       ),
 
       // Hero Section
-      React.createElement("section", { className: "relative bg-gradient-to-br from-indigo-50 to-white overflow-hidden" },
+      React.createElement("section", { id: "hero", className: "relative bg-gradient-to-br from-indigo-50 to-white overflow-hidden" },
         React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 sm:pt-24 sm:pb-20 lg:pt-32 lg:pb-28" },
           React.createElement("div", { className: "text-center" },
             React.createElement("h1", { className: "text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight" }, current.heroTitle),
@@ -287,7 +275,6 @@ function App() {
         React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
           React.createElement("div", { className: "lg:text-center" },
             React.createElement("h2", { className: "text-base text-indigo-600 font-semibold tracking-wide uppercase" }, current.aboutTitle),
-            React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.aboutTitle),
             React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.aboutDesc)
           )
         )
@@ -299,22 +286,20 @@ function App() {
           React.createElement("div", { className: "lg:text-center" },
             React.createElement("h2", { className: "text-base text-indigo-600 font-semibold tracking-wide uppercase" }, current.servicesTitle),
             React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.servicesTitle),
-            React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.servicesSubtitle),
-            React.createElement("div", { className: "mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3" },
-              current.serviceItems.map((service, idx) =>
+            React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.servicesSubtitle)
+          ),
+          React.createElement("div", { className: "mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3" },
+            current.serviceItems.map((service, idx) =>
+              React.createElement("div", {
+                key: idx,
+                className: "bg-white p-6 rounded-lg shadow-sm hover:shadow transition-shadow flex items-start"
+              },
                 React.createElement("div", {
-                  key: idx,
-                  className: "bg-white p-6 rounded-lg shadow-sm hover:shadow transition-shadow"
+                  className: "rounded-md bg-indigo-50 w-12 h-12 flex items-center justify-center mr-4 flex-shrink-0"
                 },
-                  React.createElement("div", {
-                    className: "rounded-md bg-indigo-50 w-12 h-12 flex items-center justify-center mb-4"
-                  },
-                    React.createElement("span", {
-                      className: "text-indigo-600 font-bold"
-                    }, idx + 1)
-                  ),
-                  React.createElement("p", { className: "text-gray-700" }, service)
-                )
+                  React.createElement("span", { className: "text-indigo-600 font-bold" }, idx + 1)
+                ),
+                React.createElement("p", { className: "text-gray-700 self-center" }, service)
               )
             )
           )
@@ -327,26 +312,24 @@ function App() {
           React.createElement("div", { className: "lg:text-center" },
             React.createElement("h2", { className: "text-base text-indigo-600 font-semibold tracking-wide uppercase" }, current.trainingTitle),
             React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.trainingTitle),
-            React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.trainingSubtitle),
-            React.createElement("div", { className: "mt-16" },
-              React.createElement("div", { className: "flex flex-wrap border-b border-gray-200" },
-                trainingTabs.map((tab, index) =>
-                  React.createElement("button", {
-                    key: index,
-                    className: `px-6 py-3 font-medium text-sm border-b-2 transition-colors ${
-                      activeTab === index
-                        ? "border-indigo-600 text-indigo-600"
-                        : "border-transparent text-gray-600 hover:text-indigo-600"
-                    }`,
-                    onClick: () => setActiveTab(index)
-                  }, tab.title[language])
-                )
-              ),
-              React.createElement("div", { className: "mt-6 p-6 bg-gray-50 rounded-lg shadow-sm" },
-                React.createElement("h3", { className: "text-xl font-semibold text-gray-900" }, trainingTabs[activeTab].title[language]),
-                React.createElement("p", { className: "mt-2 text-gray-600" }, trainingTabs[activeTab].description[language])
-              )
+            React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.trainingSubtitle)
+          ),
+          React.createElement("div", { className: "mt-16 flex flex-wrap justify-center border-b border-gray-200" },
+            trainingTabs.map((tab, index) =>
+              React.createElement("button", {
+                key: index,
+                className: `px-6 py-3 font-medium text-sm border-b-2 transition-colors ${
+                  activeTab === index
+                    ? "border-indigo-600 text-indigo-600"
+                    : "border-transparent text-gray-600 hover:text-indigo-600"
+                }`,
+                onClick: () => setActiveTab(index)
+              }, tab.title[language])
             )
+          ),
+          React.createElement("div", { className: "mt-6 p-6 bg-gray-50 rounded-lg shadow-sm" },
+            React.createElement("h3", { className: "text-xl font-semibold text-gray-900" }, trainingTabs[activeTab].title[language]),
+            React.createElement("p", { className: "mt-2 text-gray-600" }, trainingTabs[activeTab].description[language])
           )
         )
       ),
@@ -357,16 +340,16 @@ function App() {
           React.createElement("div", { className: "lg:text-center" },
             React.createElement("h2", { className: "text-base text-indigo-600 font-semibold tracking-wide uppercase" }, current.superpowersTitle),
             React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.superpowersTitle),
-            React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.superpowersSubtitle),
-            React.createElement("div", { className: "mt-16 grid gap-8 md:grid-cols-2" },
-              current.superpowers.map((sp, idx) =>
-                React.createElement("div", {
-                  key: idx,
-                  className: "bg-white p-6 rounded-lg shadow-sm hover:shadow transition-shadow"
-                },
-                  React.createElement("h3", { className: "text-xl font-semibold text-gray-900" }, sp.title),
-                  React.createElement("p", { className: "mt-2 text-gray-600" }, sp.description)
-                )
+            React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.superpowersSubtitle)
+          ),
+          React.createElement("div", { className: "mt-16 grid gap-8 md:grid-cols-2" },
+            current.superpowers.map((sp, idx) =>
+              React.createElement("div", {
+                key: idx,
+                className: "bg-white p-6 rounded-lg shadow-sm hover:shadow transition-shadow"
+              },
+                React.createElement("h3", { className: "text-xl font-semibold text-gray-900" }, sp.title),
+                React.createElement("p", { className: "mt-2 text-gray-600" }, sp.description)
               )
             )
           )
