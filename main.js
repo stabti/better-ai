@@ -1,9 +1,10 @@
-const { useState } = React;
+const { useState, useEffect } = React;
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [language, setLanguage] = useState('en');
+  const [route, setRoute] = useState(window.location.hash.replace('#/', '') || 'home');
 
   const texts = {
     en: {
@@ -108,6 +109,23 @@ function App() {
 
   const current = texts[language];
 
+  const navLinks = {
+    en: [
+      { label: "About", id: "about" },
+      { label: "Services", id: "services" },
+      { label: "Training", id: "training" },
+      { label: "Superpowers", id: "superpowers" },
+      { label: "Contact", id: "contact" }
+    ],
+    fr: [
+      { label: "À Propos", id: "about" },
+      { label: "Services", id: "services" },
+      { label: "Formations", id: "training" },
+      { label: "Superpouvoirs", id: "superpowers" },
+      { label: "Contact", id: "contact" }
+    ]
+  };
+
   const trainingTabs = [
     {
       title: {
@@ -151,23 +169,177 @@ function App() {
     }
   ];
 
-  const navLinks = {
-    en: [
-      { label: "About", id: "about" },
-      { label: "Services", id: "services" },
-      { label: "Training", id: "training" },
-      { label: "Superpowers", id: "superpowers" },
-      { label: "Contact", id: "contact" }
-    ],
-    fr: [
-      { label: "À Propos", id: "about" },
-      { label: "Services", id: "services" },
-      { label: "Formations", id: "training" },
-      { label: "Superpouvoirs", id: "superpowers" },
-      { label: "Contact", id: "contact" }
-    ]
-  };
+  // Listen for hash changes and update route
+  useEffect(() => {
+    const onHashChange = () => {
+      setRoute(window.location.hash.replace('#/', '') || 'home');
+    };
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
 
+  // Also update route when language changes (to re-render sections)
+  useEffect(() => {
+    setRoute(window.location.hash.replace('#/', '') || 'home');
+  }, [language]);
+
+  // Scroll to section if not on training page
+  useEffect(() => {
+    if (route && route !== 'training' && route !== 'home') {
+      setTimeout(() => {
+        const el = document.getElementById(route);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, [route]);
+
+  // Render the correct "page"
+  function renderPage() {
+    if (route === 'training') {
+      return (
+        React.createElement("section", { id: "training", className: "py-16 bg-white min-h-screen" },
+          React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
+            React.createElement("div", { className: "lg:text-center" },
+              React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.trainingTitle),
+              React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.trainingSubtitle)
+            ),
+            React.createElement("div", { className: "mt-16 flex flex-wrap justify-center border-b border-gray-200" },
+              trainingTabs.map((tab, index) =>
+                React.createElement("button", {
+                  key: index,
+                  className: `px-6 py-3 font-medium text-sm border-b-2 transition-colors ${
+                    activeTab === index
+                      ? "border-indigo-600 text-indigo-600"
+                      : "border-transparent text-gray-600 hover:text-indigo-600"
+                  }`,
+                  onClick: () => setActiveTab(index)
+                }, tab.title[language])
+              )
+            ),
+            React.createElement("div", { className: "mt-6 p-6 bg-gray-50 rounded-lg shadow-sm" },
+              React.createElement("h3", { className: "text-xl font-semibold text-gray-900" }, trainingTabs[activeTab].title[language]),
+              React.createElement("p", { className: "mt-2 text-gray-600" }, trainingTabs[activeTab].description[language])
+            ),
+            React.createElement("div", { className: "mt-8 text-center" },
+              React.createElement("a", {
+                href: "#/",
+                className: "text-indigo-600 underline hover:text-indigo-800"
+              }, language === 'en' ? "Back to Home" : "Retour à l'accueil")
+            )
+          )
+        )
+      );
+    }
+
+    // Render homepage (all sections except training)
+    return (
+      React.createElement(React.Fragment, null,
+        // Hero Section
+        React.createElement("section", { id: "hero", className: "relative bg-gradient-to-br from-indigo-50 to-white overflow-hidden" },
+          React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 sm:pt-24 sm:pb-20 lg:pt-32 lg:pb-28" },
+            React.createElement("div", { className: "text-center" },
+              React.createElement("h1", { className: "text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight" }, current.heroTitle),
+              React.createElement("p", { className: "mt-6 text-xl text-gray-600 max-w-3xl mx-auto" }, current.heroDesc),
+              React.createElement("div", { className: "mt-10" },
+                React.createElement("a", {
+                  href: "#/contact",
+                  className: "inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                }, current.getInTouch)
+              )
+            )
+          )
+        ),
+        // About Section
+        React.createElement("section", { id: "about", className: "py-16 bg-white" },
+          React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
+            React.createElement("div", { className: "lg:text-center" },
+              React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.aboutTitle),
+              React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.aboutDesc)
+            )
+          )
+        ),
+        // Services Section
+        React.createElement("section", { id: "services", className: "py-16 bg-gray-50" },
+          React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
+            React.createElement("div", { className: "lg:text-center" },
+              React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.servicesTitle),
+              React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.servicesSubtitle)
+            ),
+            React.createElement("div", { className: "mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3" },
+              current.serviceItems.map((service, idx) =>
+                React.createElement("div", {
+                  key: idx,
+                  className: "bg-white p-6 rounded-lg shadow-sm hover:shadow transition-shadow flex items-start"
+                },
+                  React.createElement("div", {
+                    className: "rounded-md bg-indigo-50 w-12 h-12 flex items-center justify-center mr-4 flex-shrink-0"
+                  },
+                    React.createElement("span", { className: "text-indigo-600 font-bold" }, idx + 1)
+                  ),
+                  React.createElement("p", { className: "text-gray-700 self-center" }, service)
+                )
+              )
+            )
+          )
+        ),
+        // Superpowers Section
+        React.createElement("section", { id: "superpowers", className: "py-16 bg-indigo-50" },
+          React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
+            React.createElement("div", { className: "lg:text-center" },
+              React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.superpowersTitle),
+              React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.superpowersSubtitle)
+            ),
+            React.createElement("div", { className: "mt-16 grid gap-8 md:grid-cols-2" },
+              current.superpowers.map((sp, idx) =>
+                React.createElement("div", {
+                  key: idx,
+                  className: "bg-white p-6 rounded-lg shadow-sm hover:shadow transition-shadow"
+                },
+                  React.createElement("h3", { className: "text-xl font-semibold text-gray-900" }, sp.title),
+                  React.createElement("p", { className: "mt-2 text-gray-600" }, sp.description)
+                )
+              )
+            )
+          )
+        ),
+        // Contact Section
+        React.createElement("section", { id: "contact", className: "py-16 bg-indigo-50" },
+          React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" },
+            React.createElement("h2", { className: "text-base text-indigo-600 font-semibold tracking-wide uppercase" }, "Get in Touch"),
+            React.createElement("p", { className: "mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl" }, current.contactTitle),
+            React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-600 mx-auto" }, current.contactDesc),
+            React.createElement("div", { className: "mt-8" },
+              React.createElement("a", {
+                href: "mailto:soniatabti@gmail.com",
+                className: "inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+              }, "soniatabti@gmail.com")
+            ),
+            React.createElement("div", { className: "mt-8" },
+              React.createElement("h3", { className: "text-xl font-semibold text-gray-900" }, current.bookNow),
+              React.createElement("p", { className: "text-gray-600 mt-2" }, current.bookDesc),
+              React.createElement("a", {
+                href: "https://calendly.com/sonia-tabti",
+                target: "_blank",
+                rel: "noopener noreferrer",
+                className: "inline-flex items-center justify-center px-6 py-3 mt-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+              }, current.bookAction)
+            ),
+            React.createElement("div", { className: "mt-8" },
+              React.createElement("p", { className: "text-gray-600" }, current.connect),
+              React.createElement("a", {
+                href: "https://www.linkedin.com/in/sonia-tabti-phd-b6993835",
+                target: "_blank",
+                rel: "noopener noreferrer",
+                className: "text-indigo-600 underline hover:text-indigo-800"
+              }, current.linkedin)
+            )
+          )
+        )
+      )
+    );
+  }
+
+  // --- RENDER ---
   return (
     React.createElement("div", { className: "bg-white text-gray-800 leading-relaxed tracking-tight" },
 
@@ -176,13 +348,13 @@ function App() {
         React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
           React.createElement("div", { className: "flex justify-between items-center py-4 md:justify-start md:space-x-10" },
             React.createElement("div", { className: "flex justify-start lg:w-0 lg:flex-1" },
-              React.createElement("a", { href: "#", className: "text-xl font-bold text-indigo-600" }, current.title)
+              React.createElement("a", { href: "#/", className: "text-xl font-bold text-indigo-600" }, current.title)
             ),
             React.createElement("nav", { className: "hidden md:flex space-x-10" },
               navLinks[language].map((item, idx) =>
                 React.createElement("a", {
                   key: idx,
-                  href: `#${item.id}`,
+                  href: item.id === "training" ? "#/training" : `#/${item.id}`,
                   className: "text-base font-medium text-gray-700 hover:text-indigo-600"
                 }, item.label)
               )
@@ -228,7 +400,7 @@ function App() {
             React.createElement("div", { className: "pt-5 pb-6 px-5" },
               React.createElement("div", { className: "flex items-center justify-between" },
                 React.createElement("div", null,
-                  React.createElement("a", { href: "#", className: "text-xl font-bold text-indigo-600" }, current.title)
+                  React.createElement("a", { href: "#/", className: "text-xl font-bold text-indigo-600" }, current.title)
                 ),
                 React.createElement("div", { className: "-mr-2" },
                   React.createElement("button", {
@@ -258,8 +430,9 @@ function App() {
                   navLinks[language].map((item, idx) =>
                     React.createElement("a", {
                       key: idx,
-                      href: `#${item.id}`,
-                      className: "text-base font-medium text-gray-700 hover:text-indigo-600"
+                      href: item.id === "training" ? "#/training" : `#/${item.id}`,
+                      className: "text-base font-medium text-gray-700 hover:text-indigo-600",
+                      onClick: () => setMobileMenuOpen(false)
                     }, item.label)
                   )
                 )
@@ -275,138 +448,7 @@ function App() {
         )
       ),
 
-      // Hero Section
-      React.createElement("section", { id: "hero", className: "relative bg-gradient-to-br from-indigo-50 to-white overflow-hidden" },
-        React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 sm:pt-24 sm:pb-20 lg:pt-32 lg:pb-28" },
-          React.createElement("div", { className: "text-center" },
-            React.createElement("h1", { className: "text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight" }, current.heroTitle),
-            React.createElement("p", { className: "mt-6 text-xl text-gray-600 max-w-3xl mx-auto" }, current.heroDesc),
-            React.createElement("div", { className: "mt-10" },
-              React.createElement("a", {
-                href: "#contact",
-                className: "inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-              }, current.getInTouch)
-            )
-          )
-        )
-      ),
-
-      // About Section
-      React.createElement("section", { id: "about", className: "py-16 bg-white" },
-        React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
-          React.createElement("div", { className: "lg:text-center" },
-          React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.aboutTitle),
-          React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.aboutDesc)
-          )
-        )
-      ),
-
-      // Services Section
-      React.createElement("section", { id: "services", className: "py-16 bg-gray-50" },
-        React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
-          React.createElement("div", { className: "lg:text-center" },
-            React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.servicesTitle),
-            React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.servicesSubtitle)
-          ),
-          React.createElement("div", { className: "mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3" },
-            current.serviceItems.map((service, idx) =>
-              React.createElement("div", {
-                key: idx,
-                className: "bg-white p-6 rounded-lg shadow-sm hover:shadow transition-shadow flex items-start"
-              },
-                React.createElement("div", {
-                  className: "rounded-md bg-indigo-50 w-12 h-12 flex items-center justify-center mr-4 flex-shrink-0"
-                },
-                  React.createElement("span", { className: "text-indigo-600 font-bold" }, idx + 1)
-                ),
-                React.createElement("p", { className: "text-gray-700 self-center" }, service)
-              )
-            )
-          )
-        )
-      ),
-
-      // Training Section
-      React.createElement("section", { id: "training", className: "py-16 bg-white" },
-        React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
-          React.createElement("div", { className: "lg:text-center" },
-            React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.trainingTitle),
-            React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.trainingSubtitle)
-          ),
-          React.createElement("div", { className: "mt-16 flex flex-wrap justify-center border-b border-gray-200" },
-            trainingTabs.map((tab, index) =>
-              React.createElement("button", {
-                key: index,
-                className: `px-6 py-3 font-medium text-sm border-b-2 transition-colors ${
-                  activeTab === index
-                    ? "border-indigo-600 text-indigo-600"
-                    : "border-transparent text-gray-600 hover:text-indigo-600"
-                }`,
-                onClick: () => setActiveTab(index)
-              }, tab.title[language])
-            )
-          ),
-          React.createElement("div", { className: "mt-6 p-6 bg-gray-50 rounded-lg shadow-sm" },
-            React.createElement("h3", { className: "text-xl font-semibold text-gray-900" }, trainingTabs[activeTab].title[language]),
-            React.createElement("p", { className: "mt-2 text-gray-600" }, trainingTabs[activeTab].description[language])
-          )
-        )
-      ),
-
-      // Superpowers Section
-      React.createElement("section", { id: "superpowers", className: "py-16 bg-indigo-50" },
-        React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" },
-          React.createElement("div", { className: "lg:text-center" },
-            React.createElement("p", { className: "mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl" }, current.superpowersTitle),
-            React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" }, current.superpowersSubtitle)
-          ),
-          React.createElement("div", { className: "mt-16 grid gap-8 md:grid-cols-2" },
-            current.superpowers.map((sp, idx) =>
-              React.createElement("div", {
-                key: idx,
-                className: "bg-white p-6 rounded-lg shadow-sm hover:shadow transition-shadow"
-              },
-                React.createElement("h3", { className: "text-xl font-semibold text-gray-900" }, sp.title),
-                React.createElement("p", { className: "mt-2 text-gray-600" }, sp.description)
-              )
-            )
-          )
-        )
-      ),
-
-      // Contact Section
-      React.createElement("section", { id: "contact", className: "py-16 bg-indigo-50" },
-        React.createElement("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" },
-          React.createElement("h2", { className: "text-base text-indigo-600 font-semibold tracking-wide uppercase" }, "Get in Touch"),
-          React.createElement("p", { className: "mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl" }, current.contactTitle),
-          React.createElement("p", { className: "mt-4 max-w-2xl text-xl text-gray-600 mx-auto" }, current.contactDesc),
-          React.createElement("div", { className: "mt-8" },
-            React.createElement("a", {
-              href: "mailto:soniatabti@gmail.com",
-              className: "inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-            }, "soniatabti@gmail.com")
-          ),
-          React.createElement("div", { className: "mt-8" },
-            React.createElement("h3", { className: "text-xl font-semibold text-gray-900" }, current.bookNow),
-            React.createElement("p", { className: "text-gray-600 mt-2" }, current.bookDesc),
-            React.createElement("a", {
-              href: "https://calendly.com/sonia-tabti ",
-              target: "_blank",
-              rel: "noopener noreferrer",
-              className: "inline-flex items-center justify-center px-6 py-3 mt-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-            }, current.bookAction)
-          ),
-          React.createElement("div", { className: "mt-8" },
-            React.createElement("p", { className: "text-gray-600" }, current.connect),
-            React.createElement("a", {
-              href: "https://www.linkedin.com/in/sonia-tabti-phd-b6993835 ",
-              target: "_blank",
-              rel: "noopener noreferrer",
-              className: "text-indigo-600 underline hover:text-indigo-800"
-            }, current.linkedin)
-          )
-        )
-      ),
+      renderPage(),
 
       // Footer
       React.createElement("footer", { className: "bg-white border-t border-gray-200" },
